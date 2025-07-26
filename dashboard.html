@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lynq</title>
+    <link href="libs/gridstack.css" rel="stylesheet" />
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="top-nav-left">
+            <div class="tag">  
+                <div class="tag-icon">app_badging</div>
+                <div class="tag-text">Lynq</div>    
+            </div>
+            <div id="welcome-message" class="welcome-text"></div>
+        </div>
+        <div class="nav-actions">
+            <a href="https://chromewebstore.google.com/detail/lynq-finally-a-new-tab-wi/jbofnlgmfcokdcjohimhbhahoaadepid/reviews" id="rate-us-btn" class="icon-btn-expandable" title="Rate Us">
+                <span class="material-symbols-outlined">favorite</span>
+                <span class="btn-expand-label">Show Lynq some love</span>
+            </a>
+            <a href="https://ko-fi.com/yuripessa" target="_blank" id="support-us-btn" class="icon-btn-expandable" title="Support Us">
+                <span class="material-symbols-outlined">local_cafe</span>
+                <span class="btn-expand-label">Buy me a coffee</span>
+            </a>    
+
+            <div class="options-menu-container">
+                <button id="options-btn" class="btn-secondary">more_vert</button>
+                <div id="options-dropdown" class="options-dropdown">
+                    <button id="export-btn" class="dropdown-btn"><div class="dropdown-icon">cloud_download</div>Download Backup</button>
+                    <button id="import-btn" class="dropdown-btn"><div class="dropdown-icon">cloud_upload</div>Import Backup</button>
+                    <div class="dropdown-footer">Made with<span class="material-symbols-outlined">favorite</span>by Pessa.</div>
+                </div>
+            </div>
+
+            <button id="add-widget-btn" class="btn-primary">add</button>
+        </div>
+    </nav>
+
+    <div class="grid-stack"></div>
+    
+    <div id="link-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2 id="modal-title">Add Link</h2>
+            <form id="link-form">
+                <input type="hidden" id="link-id">
+                <input type="hidden" id="link-widget-id">
+                <div class="modal-input">
+                    <label for="link-title">Title:</label>
+                    <input type="text" id="link-title" placeholder="Give your link a title" required>
+                 </div>
+                 <div class="modal-input">
+                    <label for="link-url">URL:</label>
+                    <input type="url" id="link-url" placeholder="https://example.com" required>
+                </div>
+                <div class="modal-input">    
+                    <label for="link-icon-input">Icon:</label>
+                    <input type="text" id="link-icon-input" placeholder="Type an icon name" autocomplete="off">
+                <a href="https://fonts.google.com/icons?selected=Material+Symbols+Outlined" target="_blank" class="helper-link">
+                    Find Icons >>
+                </a>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" id="save-btn">Save</button>
+                    <button type="button" id="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-widget-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>Edit Widget</h2>
+            <form id="edit-widget-form">
+                <input type="hidden" id="edit-widget-id">
+                <div class="modal-input"> 
+                     <label for="widget-title-input">Title:</label>
+                    <input type="text" id="widget-title-input" required>
+                </div>
+                <div class="modal-input"> 
+                <label for="widget-icon-input">Icon:</label>
+                <input type="text" id="widget-icon-input" placeholder="Type an icon name" required autocomplete="off">
+                <a href="https://fonts.google.com/icons?selected=Material+Symbols+Outlined" target="_blank" class="helper-link">
+                    Find Icons >>
+                </a>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit">Save</button>
+                    <button type="button" id="edit-widget-cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2 id="confirm-modal-title">Confirm Action</h2>
+            <p id="confirm-modal-text">Are you sure?</p>
+            <div class="modal-actions">
+                <button type="submit" id="confirm-modal-ok-btn">Confirm</button>
+                <button type="button" id="confirm-modal-cancel-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="name-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>Welcome</h2>
+            <form id="name-form">
+                <label for="name-input">How would you like to be called?</label>
+                <input type="text" id="name-input" required autocomplete="off">
+                <div class="modal-actions">
+                    <button type="submit">Save</button>
+                    <button type="button" id="name-modal-cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <input type="file" id="import-file-input" accept=".json" style="display: none;">
+
+    <script src="libs/gridstack.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

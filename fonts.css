@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'GoogleSansCode';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/GoogleSansCode-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'GoogleSansCode';
+  font-style: normal;
+  font-weight: 700;
+  src: url(fonts/GoogleSansCode-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'GoogleSansCode';
+  font-style: normal;
+  font-weight: 900;
+  src: url(fonts/GoogleSansCode-ExtraBold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/material-symbols.woff2) format('woff2');
+}

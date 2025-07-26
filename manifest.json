@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Lynq: Finally, a new tab with personality.",
+  "version": "0.6",
+  "description": "Create resizable widgets to group links and design your new tab. A powerful, private and visual way to organize your shortcuts.",
+  "permissions": [
+    "storage"
+  ],
+  "chrome_url_overrides": {
+    "newtab": "dashboard.html"
+  },
+  "icons": {
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}
