@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmCancelBtn = document.getElementById('confirm-modal-cancel-btn');
     const nameModal = document.getElementById('name-modal');
     const nameForm = document.getElementById('name-form');
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
     let widgets = [];
     let userName = '';
+    let currentTheme = 'light';
 
     const showConfirmModal = (text) => {
         return new Promise((resolve) => {
@@ -97,10 +99,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
     
-    const loadData = () => {
-        chrome.storage.local.get(['widgets', 'dashboardLayout', 'userName'], (data) => {
+const loadData = () => {
+        chrome.storage.local.get(['widgets', 'dashboardLayout', 'userName', 'theme'], (data) => {
             if (chrome.runtime.lastError) { console.error('Error loading data.', chrome.runtime.lastError); return; }
             
+            applyTheme(data.theme || 'light');
+
             userName = data.userName || '';
             setupWelcomeMessage();
 
@@ -398,6 +402,25 @@ document.addEventListener('DOMContentLoaded', function () {
     addWidgetBtn.addEventListener('click', addNewWidget);
     linkForm.querySelector('#cancel-btn').addEventListener('click', () => linkModal.style.display = 'none');
     editWidgetForm.querySelector('#edit-widget-cancel-btn').addEventListener('click', () => editWidgetModal.style.display = 'none');
-    
+
+    const applyTheme = (theme) => {
+        document.body.classList.toggle('dark-mode', theme === 'dark');
+        currentTheme = theme;
+
+        if (theme === 'dark') {
+            themeToggleBtn.innerHTML = `<div class="dropdown-icon">light_mode</div>Change to Light Mode`;
+        } else {
+            themeToggleBtn.innerHTML = `<div class="dropdown-icon">dark_mode</div>Change to Dark Mode`;
+        }
+    };
+
+    const toggleTheme = () => {
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        applyTheme(newTheme);
+        chrome.storage.local.set({ theme: newTheme });
+    };
+
+    themeToggleBtn.addEventListener('click', toggleTheme);
+
     loadData();
 });

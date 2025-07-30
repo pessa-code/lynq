@@ -6,6 +6,13 @@
     --bg1: #F7F4EF;
     --font-primary: "GoogleSansCode", sans-serif;
 } 
+body.dark-mode {
+    --primary: #D4CFCB;
+    --secondary: #99928A;
+    --bg1: #201D1A;
+    --bg2: #2C2926;
+    --bg3: #413D3A;
+}
 body {
     display: flex;
     flex-direction: column;
@@ -94,7 +101,7 @@ body {
 .options-dropdown {
     display: none;
     position: absolute;
-    width: 192px;
+    width: 240px;
     right: 0;
     top: calc(100% + 8px);
     background-color: var(--bg1);
