@@ -7,11 +7,11 @@
     --font-primary: "GoogleSansCode", sans-serif;
 } 
 body.dark-mode {
-    --primary: #D4CFCB;
-    --secondary: #99928A;
-    --bg1: #201D1A;
-    --bg2: #2C2926;
-    --bg3: #413D3A;
+    --primary: #E8EAED;
+    --secondary: #9AA0A6;
+    --bg1: #202124;
+    --bg2: #303134;
+    --bg3: #3C4043;
 }
 body {
     display: flex;
