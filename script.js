@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', function () {
         cellHeight: '70px',
         minRow: 1,
         margin: 12,
+        // NOVA ABORDAGEM: Define as áreas onde o arraste NÃO deve começar
+        draggable: {
+            handle: '.grid-stack-item-content', // Usa a área de conteúdo como "alça"...
+            cancel: '.widget-content, a, button'  // ...MAS cancela o arraste se começar na lista de links ou em um botão.
+        }
     });
 
     const welcomeMessageEl = document.getElementById('welcome-message');
@@ -99,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
     
-const loadData = () => {
+    const loadData = () => {
         chrome.storage.local.get(['widgets', 'dashboardLayout', 'userName', 'theme'], (data) => {
             if (chrome.runtime.lastError) { console.error('Error loading data.', chrome.runtime.lastError); return; }
             
@@ -132,6 +137,8 @@ const loadData = () => {
             el.setAttribute('gs-h', widgetData.h);
             grid.addWidget(el);
             renderWidgetContent(el, widgetData);
+            // ATIVA O SORTABLE PARA O WIDGET
+            initSortableForWidget(widgetData.id); 
         });
     };
 
@@ -162,17 +169,30 @@ const loadData = () => {
         renderLinksForWidget(el, widgetData);
     };
 
+// Substitua a função renderLinksForWidget inteira por esta
     const renderLinksForWidget = (widgetEl, widgetData) => {
         const linksList = widgetEl.querySelector('.links-list');
         if (!linksList) return;
+        
+        // Adiciona o ID do widget à própria lista para referência futura
+        linksList.dataset.widgetId = widgetData.id;
+
         const editIconHTML = `<span class="material-symbols-outlined">design_services</span>`;
         const deleteIconHTML = `<span class="material-symbols-outlined">delete</span>`;
         linksList.innerHTML = '';
+        
         (widgetData.links || []).forEach(link => {
             const linkIcon = link.icon || 'link';
             const linkIconHTML = `<div class="link-icon"><span class="material-symbols-outlined">${linkIcon}</span></div>`;
             const li = document.createElement('li');
+            
+            // Adiciona um ID de link ao item da lista para referência
+            li.dataset.linkId = link.id;
+
             li.innerHTML = `
+                <div class="drag-handle" title="Arraste para reordenar">
+                    <span class="material-symbols-outlined">drag_indicator</span>
+                </div>
                 <a href="${link.url}">${linkIconHTML} <span class="link-icon-text">${link.title}</span></a>
                 <div class="link-actions">
                     <button class="icon-btn edit-link-btn" title="Edit link">${editIconHTML}</button>
@@ -184,8 +204,53 @@ const loadData = () => {
         });
     };
 
+    // Adicione esta nova função
+    const initSortableForWidget = (widgetId) => {
+        const widgetEl = grid.getGridItems().find(item => item.getAttribute('gs-id') === widgetId);
+        if (!widgetEl) return;
+        const linksList = widgetEl.querySelector('.links-list');
+        if (!linksList) return;
+
+        new Sortable(linksList, {
+            group: 'shared-links', // Permite arrastar entre widgets
+            handle: '.drag-handle', // Define a área de arrastar
+            animation: 150,
+            ghostClass: 'link-ghost',
+            onEnd: (evt) => {
+                const fromWidgetId = evt.from.dataset.widgetId;
+                const toWidgetId = evt.to.dataset.widgetId;
+                
+                const fromWidget = widgets.find(w => w.id === fromWidgetId);
+                const toWidget = widgets.find(w => w.id === toWidgetId);
+
+                if (!fromWidget || !toWidget) return;
+
+                // Cria uma nova ordem de IDs de link a partir do DOM
+                const newLinkOrderIds = Array.from(evt.to.children).map(li => li.dataset.linkId);
+
+                // Se o arraste foi para um widget diferente
+                if (fromWidgetId !== toWidgetId) {
+                    const movedLink = fromWidget.links.find(link => link.id === evt.item.dataset.linkId);
+                    if (movedLink) {
+                        // Remove do widget antigo
+                        fromWidget.links = fromWidget.links.filter(link => link.id !== movedLink.id);
+                        // Adiciona ao novo widget
+                        toWidget.links.push(movedLink);
+                    }
+                }
+
+                // Reordena o array de links do widget de destino para corresponder à nova ordem visual
+                toWidget.links.sort((a, b) => {
+                    return newLinkOrderIds.indexOf(a.id) - newLinkOrderIds.indexOf(b.id);
+                });
+                
+                saveWidgetsData();
+            },
+        });
+    };
+
     const addNewWidget = () => {
-        const newWidget = { id: `widget-${Date.now()}`, title: 'New Widget', icon: 'article', links: [], w: 4, h: 5 };
+        const newWidget = { id: `widget-${Date.now()}`, title: 'Widget', icon: 'article', links: [], w: 4, h: 4 };
         widgets.push(newWidget);
         saveWidgetsData();
         const el = document.createElement('div');

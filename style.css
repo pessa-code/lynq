@@ -148,6 +148,7 @@ body {
     justify-content: space-between;
     align-items: center;
     align-self: stretch;
+    cursor: grab; /* LINHA ADICIONADA */
 }
 .widget-title {
     display: flex;
@@ -176,6 +177,7 @@ body {
     list-style: none;
     overflow-y: auto;
     flex-grow: 1;
+    cursor: auto;
 }
 .links-list li {
     display: flex;
@@ -195,6 +197,10 @@ body {
     text-decoration: none;
     display: flex;
     align-items: center;
+    transition: padding-left 0.2s ease-in-out; /* Adiciona transição suave */
+}
+.links-list li:hover a {
+    padding-left: 14px;
 }
 .link-icon {
     padding: 0 12px 0 10px;
@@ -407,4 +413,43 @@ body {
 }
 .dropdown-footer .material-symbols-outlined {
     padding: 0 3px;
+}
+
+
+/* Adicionar ao final do style.css */
+
+/* Efeito 'fantasma' para o item sendo arrastado */
+.link-ghost {
+    opacity: 0.4;
+    background: var(--bg2);
+}
+
+/* Ajuste no item da lista para posicionar a área de arrastar */
+.links-list li {
+    position: relative;
+}
+
+/* Estilo para a nova área de arrastar (drag handle) */
+.drag-handle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    opacity: 0; /* Começa invisível */
+    transition: opacity 0.2s ease-in-out;
+}
+
+.drag-handle .material-symbols-outlined {
+    font-size: 18px;
+    color: var(--bg3);
+}
+
+/* Mostra a área de arrastar quando o mouse está sobre o item da lista */
+.links-list li:hover .drag-handle {
+    opacity: 1;
 }
