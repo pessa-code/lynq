@@ -242,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
         el.setAttribute('gs-id', newWidget.id);
         grid.addWidget(el, newWidget);
         renderWidgetContent(el, newWidget);
+        initSortableForWidget(newWidget.id);
         saveLayoutData();
     };
     
