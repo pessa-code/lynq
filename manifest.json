@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Lynq: Finally, a new tab with personality.",
-  "version": "0.8",
+  "version": "0.8.2",
   "description": "Create resizable widgets to group links and design your new tab. A powerful, private and visual way to organize your shortcuts.",
   "permissions": [
     "storage"
