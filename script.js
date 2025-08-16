@@ -121,7 +121,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             if (data.dashboardLayout) {
                 const cleanLayout = data.dashboardLayout.filter(layoutItem => widgets.some(widget => widget.id === layoutItem.id));
-                grid.load(cleanLayout);
+                // Remova a propriedade 'h' de cada item do layout para forçar o sizeToContent a funcionar
+                const layoutWithoutHeight = cleanLayout.map(({ h, ...rest }) => rest);
+                grid.load(layoutWithoutHeight);
             }
             grid.commit();
         });
