@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const grid = GridStack.init({
         column: 24,
         float: true,
-        cellHeight: '70px',
+        // Mude cellHeight para 'auto' e adicione sizeToContent
+        cellHeight: 'auto',
+        sizeToContent: true,
         minRow: 1,
         margin: 12,
         draggable: {

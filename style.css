@@ -175,8 +175,9 @@ body {
     padding: 0;
     margin: 0;
     list-style: none;
-    overflow-y: auto;
-    flex-grow: 1;
+    /* Remova o overflow e o flex-grow para permitir o crescimento natural */
+    overflow: visible;
+    flex-grow: unset;
     cursor: auto;
 }
 .links-list li {
