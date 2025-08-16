@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
             el.setAttribute('gs-x', widgetData.x);
             el.setAttribute('gs-y', widgetData.y);
             el.setAttribute('gs-w', widgetData.w);
-            el.setAttribute('gs-h', widgetData.h);
+            // el.setAttribute('gs-h', widgetData.h); // <-- REMOVA ESTA LINHA
             grid.addWidget(el);
             renderWidgetContent(el, widgetData);
             initSortableForWidget(widgetData.id); 
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const addNewWidget = () => {
-        const newWidget = { id: `widget-${Date.now()}`, title: 'Widget', icon: 'article', links: [], w: 4, h: 4 };
+        const newWidget = { id: `widget-${Date.now()}`, title: 'Widget', icon: 'article', links: [], w: 4 /*, h: 4*/ }; // <-- REMOVA h: 4
         widgets.push(newWidget);
         saveWidgetsData();
         const el = document.createElement('div');
